@@ -1,0 +1,63 @@
+version: '3'
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: "deyrakesh85/elasticsearch:6.2.2"
+    volumes:
+      - elasticsearch_config:/home/elasticsearch/elasticsearch-6.2.2/config
+      - elasticsearch_data:/home/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elk
+
+  kibana:
+    container_name: kibana
+    image: "deyrakesh85/kibana:6.2.2"
+    volumes:
+      - kibana_config:/data/kibana-6.2.2-linux-x86_64/config
+    ports:
+      - "5601:5601"
+    depends_on:
+      - "elasticsearch"
+    networks:
+      - elk
+  redis:
+    container_name: redis
+    image: "deyrakesh85/redis:latest"
+    volumes:
+      - redis_config:/usr/local/etc/redis/
+    ports:
+      - "6379:6379"
+    networks:
+      - elk
+
+  logstash:
+    container_name: logstash-indexer
+    image: "deyrakesh85/logstash:6.2.2-beats"
+    volumes:
+      - logstash_config:/data/configuration/
+    ports:
+      - "5044:5044"
+    depends_on:
+      - "elasticsearch"
+      - "redis"
+    networks:
+      - elk
+
+volumes:
+  elasticsearch_config:
+    driver: "local"
+  elasticsearch_data:
+    driver: "local"
+  kibana_config:
+    driver: "local"
+  logstash_config:
+    driver: "local"
+  redis_config:
+    driver: "local"
+
+networks:
+  elk:
+    driver: bridge
