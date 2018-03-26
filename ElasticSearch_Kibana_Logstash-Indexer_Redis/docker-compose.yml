@@ -35,7 +35,7 @@ services:
 
   logstash:
     container_name: logstash-indexer
-    image: "deyrakesh85/logstash:6.2.2-beats"
+    image: "deyrakesh85/logstash:redis"
     volumes:
       - logstash_config:/data/configuration/
     ports:
