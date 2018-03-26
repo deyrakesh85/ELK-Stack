@@ -59,7 +59,7 @@ services:
 
   logstash-shipper:
     container_name: logstash-shipper
-    image: "deyrakesh85/logstash-shipper:redis"
+    image: "deyrakesh85/logstash-shipper:kafka"
     volumes:
       - logstash_shipper_config:/data/configuration/
     ports:
