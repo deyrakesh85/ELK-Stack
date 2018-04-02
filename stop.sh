@@ -15,7 +15,7 @@ do
 			echo "Deleting ELK Stack..."
 			echo "
 			"
-			cd ELK-Stack/`cat /tmp/ELK_Stack` && docker-compose down
+			cd Stack/`cat /tmp/ELK_Stack` && docker-compose down
 			break
 			;;
 		N)
